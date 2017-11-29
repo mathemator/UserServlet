@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:complexType name="extraType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" use="required">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="login"/>
+                            <xs:enumeration value="password"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="requestType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GET-BALANCE" />
+            <xs:enumeration value="CREATE-AGT" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="request">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="requestType" name="request-type"/>
+                <xs:element name="extra" type="extraType" minOccurs="2" maxOccurs="2"/>        
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="extraKey">
+            <xs:selector xpath="extra" />
+            <xs:field xpath="@name"/>
+        </xs:key>
+    </xs:element>
+</xs:schema>
